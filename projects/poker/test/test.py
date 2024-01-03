@@ -1,6 +1,8 @@
 import sys
 import pytest
-from projects.poker.poker.main import player, distribute_winnings
+# Python is treating the repository structure as native namespace packages
+# https://packaging.python.org/en/latest/guides/packaging-namespace-packages/
+from projects.poker.poker import player, distribute_winnings
 
 def test_poker():
     print("Testing the player classes...")

@@ -1,44 +1,5 @@
 #include <LM335.h>
-
-#include "Arduino.h"
-class FAN {
-public:
-  FAN(int mPin);
-  void setup();
-  void highSpeed();
-  void medSpeed();
-  void lowSpeed();
-  void off();
-private:
-  int _pin;
-  int _low = 155;
-  int _medium = 205;
-  int _high = 255;
-};
-
-FAN::FAN(int mPin) {
-  _pin = mPin;
-}
-
-void FAN::setup() {
-  pinMode(_pin, OUTPUT);
-}
-
-void FAN::highSpeed() {
-  analogWrite(_pin, _high);
-}
-
-void FAN::medSpeed() {
-  analogWrite(_pin, _medium);
-}
-
-void FAN::lowSpeed() {
-  analogWrite(_pin, _low);
-}
-
-void FAN::off() {
-  analogWrite(_pin, 0);
-}
+#include <Fan.h>
 
 // global variables
 float tempC;
@@ -57,7 +18,7 @@ void loop() {
   tempC = tempSensor.measureC();
   Serial.println(tempC);
 
-  // action the fan
+  // action the fan based on the temp reading
   if (tempC < 50) {
     fan.highSpeed();
   } else {

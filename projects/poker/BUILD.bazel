@@ -8,10 +8,11 @@ py_library(
         "@py3_deps//pandas:pkg",
         "@py3_deps//pytest:pkg",
     ], 
-    srcs = [
-        "poker/__init__.py",
-        "poker/main.py",
-    ], 
+    srcs = glob(["poker/**/*.py"], exclude= ["projects/poker", "projects"]),
+    # [
+    #     "poker/__init__.py",
+    #     "poker/main.py",
+    # ], 
     visibility = ["//visibility:public"],
 )
 
