@@ -1,1 +1,1 @@
-from poker.main import player, distribute_winnings
+from poker.main import Player, distribute_winnings

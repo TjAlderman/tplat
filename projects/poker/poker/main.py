@@ -1,6 +1,6 @@
 import pandas as pd
 
-class player:
+class Player:
     def __init__(self,name="Player",expenses=0,winnings=0):
         self.name = name
         self.expenses = expenses
@@ -14,4 +14,6 @@ def distribute_winnings(players:list)->None:
         player_df = pd.DataFrame({'Name':[p.name],'Balance':[balance]})
         df = pd.concat([df,player_df],ignore_index=True)
     df = df.sort_values(by='Balance',ascending=False)
+
+
     print(df)

@@ -1,15 +1,13 @@
 import pytest
-# Python is treating the repository structure as native namespace packages
-# https://packaging.python.org/en/latest/guides/packaging-namespace-packages/
-from poker.main import player, distribute_winnings
+from poker.main import Player, distribute_winnings
 
 def test_poker():
     print("Testing the player classes...")
 
-    james_c = player(name='James C.',expenses=20,winnings=24)
-    james_o = player(name='James O.',expenses=20,winnings=16)
-    angus = player(name='Angus',expenses=20,winnings=0)
-    ted = player(name='Ted',expenses=20,winnings=40)
+    james_c = Player(name='James C.',expenses=20,winnings=24)
+    james_o = Player(name='James O.',expenses=20,winnings=16)
+    angus = Player(name='Angus',expenses=20,winnings=0)
+    ted = Player(name='Ted',expenses=20,winnings=40)
     players = [james_c,james_o,angus,ted]
     assert (players[0].name=="James C.") and (players[1].expenses==20) and (players[2].winnings==0)
 
