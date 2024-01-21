@@ -7,6 +7,7 @@ py_library(
     name = "poker", 
     deps = [
         "@py3_deps//pandas:pkg",
+        "@py3_deps//scipy:pkg",
         "@py3_deps//pytest:pkg",
     ], 
     srcs = [
