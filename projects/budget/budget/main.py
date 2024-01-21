@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+from typing import Union
 
 class TransactionCategoriser:
     """
@@ -28,10 +29,43 @@ class TransactionCategoriser:
         # Sort the data
         self.classify()
 
+
+    def sort(self, category: str, keywords: Union[str,list], index: str):
+        """
+        For the given index, check if the long description matches any of the provided keywords. If so,
+        add the cost to the provided category
+
+        :param category: Category to sort the transaction into, if identfied.
+        :type category: str
+        :param keywords: Keywords to check the long description for matches.
+        :type keywords: Union[str,list]
+        :param index: Index (transaction) to be processed.
+        :type index: str
+        """
+        description = self.df['Long description'][index]
+        if isinstance(keywords, list) and any(re.search(key, description) for key in keywords):
+            self.categorised[category] += float(self.df['Debit amount'][index])
+            return 1
+        elif isinstance(keywords, str) and re.search(keywords, description):
+            self.categorised[category] += float(self.df['Debit amount'][index])
+            return 1
+        return 0
+        
+
     def classify(self):
         # Add to the total
-        for i in range(self.df['Long description'].size):
-            self.categorised['Total'] += float(self.df['Debit amount'][i])
+        for index in range(self.df['Long description'].size):
+            # get the data
+            description = self.df['Long description'][index]
+            amount = float(self.df['Debit amount'][index])
+            # add to total
+            self.categorised['Total'] += amount
+            # sort into category
+            found = 0
+            while not found:
+                
+                found = self.sort('')
+
         # Sort into a category
         if re.search('Woolworths',self.df['Long description'][i]) or re.search('WOOLWORTHS',self.df['Long description'][i]) or (re.search('COLES', self.df['Long description'][i]) and not re.search('COLES EXPRESS', self.df['Long description'][i])):
             self.categorised['Groceries'] += float(self.df['Debit amount'][i])
