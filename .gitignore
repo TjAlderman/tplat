@@ -4,3 +4,4 @@ bazel-tplat
 bazel-testlogs
 .DS_Store
 launch.json
+__pycache__

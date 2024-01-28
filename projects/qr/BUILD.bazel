@@ -1,0 +1,17 @@
+# load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_python//python:packaging.bzl", "py_wheel")
+load("@aspect_rules_py//py:defs.bzl", "py_library")
+
+# Defining a python library. We will package this library as a wheel
+py_library(
+    name = "qr", 
+    deps = [
+        "@py3_deps//qrcode:pkg"
+    ], 
+    srcs = [
+        "main.py",
+    ], 
+    imports = ["."],
+    visibility = ["//visibility:public"],
+)
+    
