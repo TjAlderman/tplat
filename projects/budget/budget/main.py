@@ -1,98 +1,107 @@
 import pandas as pd
 import re
 from typing import Union
+from pathlib import Path
 
-class TransactionCategoriser:
+# keys dict provide a level of abstraction that will ensure the program can easily be made compatible with other banks csv formats.
+keys = {"Description" : ["Long description"], "Balance" : ["Debit amount"]} # if using a new bank bank with differnt csv format, add as value 
+matches =  {"TFR": ["tfr from t j alder"], "Takeout": ["subway"], "Groceries": ["woolworths", "coles"], "Icecream":["spiltmilk"], "Petrol":["ampol", "bp", "7-eleven"], 
+           "Physio":["woden integrated phy"], "Doctor":[], "Alcohol":["bws","liqourland"], "Dentist":[], 
+           "Exercise":["club lime","dark carnival"], "Declined EFT":["declined eft fee"], "Car":["super cheap","bapcor"], 
+           "Bunnings":["bunnings"]}
+categories = list(matches.keys())
+
+class Transaction:
     """
-    Class that is initialised using a .csv containing transaction history, and uses the description
-    associated with each transaction to sort into a category.
-
-    :param fp: Filepath to DefenceBank formatted .csv containing transaction history.
-    :type fp: str
+    This class provides a level of abstraction that will ensure the program can easily be 
+    made compatible with other banks csv formats.
     """
-
-    def __init__(self, fp: str):
-        # Store the filepath
-        self.fp = fp
-        # Read in data
-        self.df = pd.read_csv(fp, delimiter = ',')
-        # Initialise categories
-        self.categories = ["Subway", "Groceries", "Spilt Milk", "Petrol", 
-                           "Physio", "Doctor", "Alcohol", "Dentist", 
-                           "Dark Carnival", "Club Lime", "Declined EFT", "Car", 
-                           "Bunnings", "Unknown", "Total"]
-        # Initialise amounts
-        self.amount = [0 for _ in range(len(self.categories))] 
-        # Create dict to store results
-        self.categorised = dict(zip(self.categories,self.amount))
-        self.missed = 0 # count number of mixed transactions
-        # Sort the data
-        self.classify()
+    def __init__(self, description: str, balance: str):
+        self.description = description.lower()
+        self.balance = balance
+       
 
 
-    def sort(self, category: str, keywords: Union[str,list], index: str):
-        """
-        For the given index, check if the long description matches any of the provided keywords. If so,
-        add the cost to the provided category
+def categorise(description: str)->str:
+    """
+    This function sorts a Transaction.data["description"] attribute into a category.
 
-        :param category: Category to sort the transaction into, if identfied.
-        :type category: str
-        :param keywords: Keywords to check the long description for matches.
-        :type keywords: Union[str,list]
-        :param index: Index (transaction) to be processed.
-        :type index: str
-        """
-        description = self.df['Long description'][index]
-        if isinstance(keywords, list) and any(re.search(key, description) for key in keywords):
-            self.categorised[category] += float(self.df['Debit amount'][index])
-            return 1
-        elif isinstance(keywords, str) and re.search(keywords, description):
-            self.categorised[category] += float(self.df['Debit amount'][index])
-            return 1
-        return 0
+    :param data: Transaction.data["description"] attribute.
+    :type data: str
+    :return: Identified category
+    :rtype: str
+    """
+    
+    # should figure out how to convert decsription to all lowercase so don't have to handle different capitalisation cases
+    for cat in categories:
+        for m in matches[cat]:
+            if m in description:
+                return cat
+    else:
+        return "Unknown"
+    
+    
+def main(fp, out: bool=False)-> None:
+    """
+    _summary_
+
+    :param fp: filepath to .csv file containing bank statement of transactions.
+    :type ƒp: str
+    """
+    # read in the data
+    df = pd.read_csv(fp) 
+
+    # first, find out what the description and balance headings are
+    description, balance = (None, None)
+    for d in keys["Description"]:
+        if d in list(df.columns): description = d
+    for b in keys["Balance"]:
+        if b in list(df.columns): balance = b
+    # if description or balance were not found
+    if description is None or balance is None:
+        raise Exception("Error! Unrecognised .csv structure...")
+        
+    
+    # create a dataframe to hold all the sorted data (each category is a sheet)
+    xlsx = {cat:{"Balance": [], "Description": []} for cat in categories} 
+    xlsx["Unknown"] = {"Balance": [], "Description": []}
+    xlsx["Total"] = {"Balance": []}
+
+    for index, row in df.iterrows():
+        t = Transaction(description=row[description],balance=row[balance])
+        cat = categorise(t.description)
+        # ignore transfers between your own personal accounts
+        if cat=="TFR":
+            pass
+        elif cat=="Unknown":
+            xlsx["Unknown"]["Balance"].append(t.balance)
+            xlsx["Unknown"]["Description"].append(t.description)
+        else:
+            xlsx[cat]["Balance"].append(t.balance)
+            xlsx[cat]["Description"].append(t.description)
         
 
-    def classify(self):
-        # Add to the total
-        for index in range(self.df['Long description'].size):
-            # get the data
-            description = self.df['Long description'][index]
-            amount = float(self.df['Debit amount'][index])
-            # add to total
-            self.categorised['Total'] += amount
-            # sort into category
-            found = 0
-            while not found:
-                
-                found = self.sort('')
+    # set total expense to be sum of balance columns of all sheets
+    total = ""
+    for cat in categories:
+      total += f"+SUM('{cat}'!A:A)" # sum of sheet balance column 
+    total = total.strip("+")
+    total = "="+total
+    xlsx["Total"]["Balance"].append(total)
 
-        # Sort into a category
-        if re.search('Woolworths',self.df['Long description'][i]) or re.search('WOOLWORTHS',self.df['Long description'][i]) or (re.search('COLES', self.df['Long description'][i]) and not re.search('COLES EXPRESS', self.df['Long description'][i])):
-            self.categorised['Groceries'] += float(self.df['Debit amount'][i])
-        elif re.search('SUBWAY',self.df['Long description'][i]):
-            self.categorised['Subway'] += float(self.df['Debit amount'][i])
-        elif re.search('SPILTMILK',self.df['Long description'][i]):
-            self.categorised['Spilt Milk'] += float(self.df['Debit amount'][i])
-        elif re.search('AMPOL',self.df['Long description'][i]) or re.search('BP',self.df['Long description'][i]) or re.search('7-ELEVEN',self.df['Long description'][i]) or re.search('EG GROUP', self.df['Long description'][i]) or re.search('COLES EXPRESS', self.df['Long description'][i]):
-            self.categorised['Petrol'] += float(self.df['Debit amount'][i])
-        elif re.search('WODEN INTEGRATED PHY',self.df['Long description'][i]):
-            self.categorised['Physio'] += float(self.df['Debit amount'][i])
-        elif re.search('DARK CARNIVAL', self.df['Long description'][i]):
-            self.categorised['Dark Carnival'] += float(self.df['Debit amount'][i])
-        elif re.search('TFR from T J Alder', self.df['Long description'][i]):
-            pass
-        elif re.search('SUPER CHEAP',self.df['Long description'][i]) or re.search('BAPCOR',self.df['Long description'][i]):
-            self.categorised['Car'] += float(self.df['Debit amount'][i])
-        elif re.search('BWS',self.df['Long description'][i]) or re.search('LIQUORLAND',self.df['Long description'][i]):
-            self.categorised['Alcohol'] += float(self.df['Debit amount'][i])
-        elif re.search('Declined EFT Fee', self.df['Long description'][i]):
-            self.categorised['Declined EFT'] += self.df['Debit amount'][i]
-        elif re.search('BUNNING', self.df['Long description'][i]):
-            self.categorised['Bunnings'] += self.df['Debit amount'][i]
-        # Otherwise, add to missed 
-        else:
-            print(self.df['Long description'][i])
-            self.categorised['Unknown'] += float(self.df['Debit amount'][i])
-            self.missed += 1 
+    # write to xlsx if out is passed as arg
+    if out:
+        with pd.ExcelWriter('CATEGORISED'+Path(fp).stem+'.xlsx') as writer:
+            for cat in categories:
+                pd_df = pd.DataFrame(xlsx[cat])
+                pd_df.to_excel(writer, sheet_name=cat, index=False) # not sure about double braces here
+            for cat in ["Total", "Unknown"]: # handle special cases
+                pd_df = pd.DataFrame(xlsx[cat])
+                pd_df.to_excel(writer,sheet_name=cat, index=False)
 
-        print(f"Categorisation complete! {self.df.size} total transactions were considered, {self.missed} of which were unable to be categorised.")
+    # print(f"Categorisation complete! {df.size} total transactions were considered, { len(xlsx["Unknowned"]["description"])} of which were unable to be categorised.")
+    return xlsx
+
+
+# EXAMPLE'
+result = main("projects/budget/docs/data/Transactions_2022-12-01_2023-05-03.csv", out=True)
