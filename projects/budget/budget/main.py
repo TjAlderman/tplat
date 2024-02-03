@@ -4,21 +4,33 @@ from typing import Union
 from pathlib import Path
 
 # keys dict provide a level of abstraction that will ensure the program can easily be made compatible with other banks csv formats.
-keys = {"Description" : ["Long description"], "Balance" : ["Debit amount"]} # if using a new bank bank with differnt csv format, add as value 
+keys = {"Description" : ["Long description"], "Balance" : ["Debit amount"], "Date": ["Create date"]} # if using a new bank bank with differnt csv format, add as value 
 matches =  {"TFR": ["tfr from t j alder"], "Takeout": ["subway"], "Groceries": ["woolworths", "coles"], "Icecream":["spiltmilk"], "Petrol":["ampol", "bp", "7-eleven"], 
            "Physio":["woden integrated phy"], "Doctor":[], "Alcohol":["bws","liqourland"], "Dentist":[], 
            "Exercise":["club lime","dark carnival"], "Declined EFT":["declined eft fee"], "Car":["super cheap","bapcor"], 
-           "Bunnings":["bunnings"]}
+           "Bunnings":["bunnings"], "Uber":["uber"], "Subscriptions":["remarkable"]}
 categories = list(matches.keys())
+
 
 class Transaction:
     """
     This class provides a level of abstraction that will ensure the program can easily be 
     made compatible with other banks csv formats.
     """
-    def __init__(self, description: str, balance: str):
-        self.description = description.lower()
-        self.balance = balance
+    def __init__(self, df: pd.DataFrame):
+        self.columns = {"Description": None, "Balance": None, "Date": None}
+        for d in keys["Description"]:
+            if d in list(df.columns): self.columns["Description"] = d
+        for b in keys["Balance"]:
+            if b in list(df.columns): self.columns["Balance"] = b
+        for t in keys["Date"]:
+            if t in list(df.columns): self.columns["Date"] = t
+
+
+    def store(self, row):
+        self.description = row[self.columns["Description"]]
+        self.balance = row[self.columns["Balance"]]
+        self.date = row[self.columns["Date"]]
        
 
 
@@ -35,7 +47,7 @@ def categorise(description: str)->str:
     # should figure out how to convert decsription to all lowercase so don't have to handle different capitalisation cases
     for cat in categories:
         for m in matches[cat]:
-            if m in description:
+            if m in description.lower():
                 return cat
     else:
         return "Unknown"
@@ -52,23 +64,19 @@ def main(fp, out: bool=False)-> None:
     df = pd.read_csv(fp) 
 
     # first, find out what the description and balance headings are
-    description, balance = (None, None)
-    for d in keys["Description"]:
-        if d in list(df.columns): description = d
-    for b in keys["Balance"]:
-        if b in list(df.columns): balance = b
+    t = Transaction(df=df)
     # if description or balance were not found
-    if description is None or balance is None:
+    if None in list(t.columns.values()):
         raise Exception("Error! Unrecognised .csv structure...")
         
     
     # create a dataframe to hold all the sorted data (each category is a sheet)
-    xlsx = {cat:{"Balance": [], "Description": []} for cat in categories} 
-    xlsx["Unknown"] = {"Balance": [], "Description": []}
+    xlsx = {cat:{"Balance": [], "Description": [], "Date": []} for cat in categories} 
+    xlsx["Unknown"] = {"Balance": [], "Description": [], "Date": []}
     xlsx["Total"] = {"Balance": []}
 
     for index, row in df.iterrows():
-        t = Transaction(description=row[description],balance=row[balance])
+        t.store(row)
         cat = categorise(t.description)
         # ignore transfers between your own personal accounts
         if cat=="TFR":
@@ -76,12 +84,15 @@ def main(fp, out: bool=False)-> None:
         elif cat=="Unknown":
             xlsx["Unknown"]["Balance"].append(t.balance)
             xlsx["Unknown"]["Description"].append(t.description)
+            xlsx["Unknown"]["Date"].append(t.date)
         else:
             xlsx[cat]["Balance"].append(t.balance)
             xlsx[cat]["Description"].append(t.description)
+            xlsx[cat]["Date"].append(t.date)
         
 
     # set total expense to be sum of balance columns of all sheets
+    categories.remove("TFR")
     total = ""
     for cat in categories:
       total += f"+SUM('{cat}'!A:A)" # sum of sheet balance column 
@@ -91,7 +102,7 @@ def main(fp, out: bool=False)-> None:
 
     # write to xlsx if out is passed as arg
     if out:
-        with pd.ExcelWriter('CATEGORISED'+Path(fp).stem+'.xlsx') as writer:
+        with pd.ExcelWriter('CATEGORISED_'+Path(fp).stem+'.xlsx') as writer:
             for cat in categories:
                 pd_df = pd.DataFrame(xlsx[cat])
                 pd_df.to_excel(writer, sheet_name=cat, index=False) # not sure about double braces here
