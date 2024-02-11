@@ -22,10 +22,9 @@ title: tplat docs
 email: aldertimothy@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Documentation for projects within tplat; Timothy Alder's personal repository.
-domain: tplat.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
+domain: tplat.github.io      # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://tplat.github.io  # the base hostname and protocol for your site, e.g. http://example.com
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: ""
 github_username:  TjAlderman
 
 # Build settings
