@@ -5,3 +5,15 @@ bazel-testlogs
 .DS_Store
 launch.json
 __pycache__
+
+# Vivado
+**/*.lpr
+**/*.ip_user_files
+**/*.runs
+**/*.sim
+**/*.dcp
+**/*.wdf
+**/*.xpr
+**/*.wpc
+**/*.xml
+**/*.cache
