@@ -1,10 +1,16 @@
+# Bazel
 bazel-out
 bazel-bin
 bazel-tplat
 bazel-testlogs
+
+# Python
 .DS_Store
 launch.json
 __pycache__
+
+# Project files
+projects/car
 
 # Vivado
 **/*.lpr
