@@ -1,0 +1,15 @@
+load("@rules_python//python:defs.bzl", "py_test")
+
+py_test(
+    name = "test",
+    srcs = [
+        "test.py",
+    ],
+    deps = [
+        "//projects/translate:translate",
+        "@pypi//pytest:pkg",
+    ],
+    data = [
+        "data"
+    ]
+)

@@ -1,0 +1,20 @@
+1
+00:00:06,120 --> 00:00:08,120
+<font color = "#ffffff">* rain ripples. *</font>
+
+2
+00:00:08,440 --> 00:00:09,920
+<font color = "#ffff00"> Zelda </font>
+
+3
+00:00:09,960 --> 00:00:11,440
+<font color = "#00ffff"> ben </font>
+
+4
+00:00:11,480 --> 00:00:12,960
+<font color = "#00ff00"> Theo </font>
+
+5
+00:01:04,000 --> 00:01:06,480
+<font color = "#ffffff">* quiet </font>
+<font color = "#ffffff"> melancholic piano music *</font>

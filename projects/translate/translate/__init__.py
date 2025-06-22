@@ -1,0 +1,1 @@
+from translate.main import translate_srt
