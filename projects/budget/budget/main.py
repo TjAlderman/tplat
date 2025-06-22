@@ -2,13 +2,14 @@ import pandas as pd
 import re
 from typing import Union
 from pathlib import Path
+from datetime import datetime
 
 # keys dict provide a level of abstraction that will ensure the program can easily be made compatible with other banks csv formats.
 keys = {"Description" : ["Long description"], "Balance" : ["Debit amount"], "Date": ["Create date"]} # if using a new bank bank with differnt csv format, add as value 
-matches =  {"TFR": ["tfr from t j alder"], "Takeout": ["subway"], "Groceries": ["woolworths", "coles"], "Icecream":["spiltmilk"], "Petrol":["ampol", "bp", "7-eleven"], 
-           "Physio":["woden integrated phy"], "Doctor":[], "Alcohol":["bws","liqourland"], "Dentist":[], 
-           "Exercise":["club lime","dark carnival"], "Declined EFT":["declined eft fee"], "Car":["super cheap","bapcor"], 
-           "Bunnings":["bunnings"], "Uber":["uber"], "Subscriptions":["remarkable"]}
+matches =  {"TFR": ["tfr from t j alder"], "Takeout": ["subway", "mcdonalds", "bakery", "sushi", "anitagelato", "zambrero", "kfc", "ice cream", "monster cupbop", "the food co-op shop", "gangnam lane", "hello harry", "tilleys", "oporto", "ballistic burrito", "kebab", "dumpling", "spilt milk", "grease monkey", "colosseum italian", "melted toasties", "hungry jacks", "sharetea"], "Groceries": ["woolworths", "coles", "unique meats", "iga", "ziggys", "oz fish", "aldi", "butcher", "supabarn"], "Icecream":["spiltmilk"], "Petrol":["ampol", "bp", "7-eleven", "petroleum"], 
+           "Physio":["woden integrated", "philip snare and feng"], "Doctor":["damian smith"], "Alcohol":["bws","liqourland", "hopscotch", "dollys", "one22", "austrian australian cl", "loquita", "king o malley s", "mooseheads", "civic pub", "fun time pony", "squeaky clean bar", "hotel kingston", "fiction club", "canberra north bowling", "transit bar", "thirsty camel", "bar beirut", "casino canberra", "tathra beach bowling", "tathra hotel", "the duxton"], "Dentist":[], 
+           "Exercise":["club lime","dark carnival"], "Declined EFT":["declined eft fee"], "Car":["super cheap","bapcor", "bingle", "techworkz", "colmatt services"], 
+           "Bunnings":["bunnings"], "Uber":["uber"], "Subscriptions":["remarkable", "chatgpt", "aldimobile"], "Parking":["parking"], "Games":["playstation"]}
 categories = list(matches.keys())
 
 
@@ -81,18 +82,20 @@ def main(fp, out: bool=False)-> None:
         # ignore transfers between your own personal accounts
         if cat=="TFR":
             pass
-        elif cat=="Unknown":
-            xlsx["Unknown"]["Balance"].append(t.balance)
-            xlsx["Unknown"]["Description"].append(t.description)
-            xlsx["Unknown"]["Date"].append(t.date)
         else:
             xlsx[cat]["Balance"].append(t.balance)
             xlsx[cat]["Description"].append(t.description)
             xlsx[cat]["Date"].append(t.date)
         
-
-    # set total expense to be sum of balance columns of all sheets
+    # # Add totals field
     categories.remove("TFR")
+    for cat in categories:
+        total = sum(xlsx[cat]["Balance"])
+        xlsx[cat]["Balance"].append(total)
+        xlsx[cat]["Description"].append("Total")
+        current_datetime = datetime.now()
+        xlsx[cat]["Date"].append(current_datetime.strftime("%I:%M%p %a %-d %B, %Y").lower())
+    # set total expense to be sum of balance columns of all sheets
     total = ""
     for cat in categories:
       total += f"+SUM('{cat}'!A:A)" # sum of sheet balance column 
@@ -115,4 +118,4 @@ def main(fp, out: bool=False)-> None:
 
 
 # EXAMPLE'
-result = main("projects/budget/docs/data/Transactions_2022-12-01_2023-05-03.csv", out=True)
+result = main("/Users/timothyalder/Documents/tplat/projects/budget/docs/data/Transactions_2025-01-01_2025-01-22.csv", out=True)
