@@ -6,6 +6,7 @@ def _doc_menu_item_impl(ctx):
             name = ctx.attr.name,
             url = ctx.attr.url,
             weight = ctx.attr.weight,
+            data = ctx.attr.data,
         )
     ]
 
@@ -14,5 +15,9 @@ doc_menu_item = rule(
     attrs = {
         "url": attr.string(mandatory = True),
         "weight": attr.int(default = 0),
+        "data": attr.label_list(
+            allow_files = True,
+            default = [],
+        ),
     },
 )

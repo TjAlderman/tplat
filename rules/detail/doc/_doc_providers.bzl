@@ -14,5 +14,6 @@ DocMenuItem = provider(
         "name": "Name displayed in menu",
         "url": "URL menu item links to",
         "weight": "Weight of menu item",
+        "data": "Files to include when building DocMenuItem",
     }
 )

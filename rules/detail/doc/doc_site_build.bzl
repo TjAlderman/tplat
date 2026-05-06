@@ -47,6 +47,14 @@ def _doc_site_build_impl(ctx):
     ]
     for doc_menu_item in ctx.attr.menu:
         doc_menu_item = doc_menu_item[DocMenuItem]
+        for dep in doc_menu_item.data:
+            for file in dep.files.to_list():
+                data_files.append(file)
+                script_lines.append("cp '{src}' '{out}/{file}'".format(
+                    src = file.path,
+                    out = output_dir.path,
+                    file = file.basename,
+                ))
         script_lines.append(
             "echo '    - name: \"{name}\"\n      url: \"{url}\"\n      weight: {weight}\n' >> '{config}'".format(
                 name = doc_menu_item.name,
