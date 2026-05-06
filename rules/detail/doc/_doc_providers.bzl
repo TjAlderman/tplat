@@ -13,6 +13,7 @@ DocMenuItem = provider(
     fields = {
         "name": "Name displayed in menu",
         "url": "URL menu item links to",
+        "pageRef": "Relative page reference item links to",
         "weight": "Weight of menu item",
         "data": "Files to include when building DocMenuItem",
     }

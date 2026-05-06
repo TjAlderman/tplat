@@ -56,9 +56,10 @@ def _doc_site_build_impl(ctx):
                     file = file.basename,
                 ))
         script_lines.append(
-            "echo '    - name: \"{name}\"\n      url: \"{url}\"\n      weight: {weight}\n' >> '{config}'".format(
+            "echo '    - name: \"{name}\"\n      {link}: \"{dest}\"\n      weight: {weight}' >> '{config}'".format(
                 name = doc_menu_item.name,
-                url = doc_menu_item.url,
+                link = "url" if doc_menu_item.url else "pageRef",
+                dest = doc_menu_item.url if doc_menu_item.url else doc_menu_item.pageRef,
                 weight = doc_menu_item.weight,
                 config = config.path,
             ),

@@ -8,7 +8,7 @@ doc_menu_item(
 
 doc_menu_item(
     name = "Resume",
-    url = "https://timothyalder.github.io/tplat/docs/resume.pdf",
+    pageRef = "/docs/resume.pdf",
     weight = 2000,
     data = [
         "//projects/docs/data",
