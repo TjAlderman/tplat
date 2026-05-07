@@ -1,6 +1,8 @@
 DocSiteInfo = provider(
     fields = {
-        "output_dir": "Directory containing built site",
+        "content_dir": "Directory containing site content",
+        "static_dir": "Directory containing site static data",
+        "config": "config.yaml for site",
     },
 )
 DocSectionInfo = provider(
