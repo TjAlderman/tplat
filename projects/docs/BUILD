@@ -8,7 +8,7 @@ doc_menu_item(
 
 doc_menu_item(
     name = "Resume",
-    pageRef = "/docs/resume.pdf",
+    url = "/docs/resume.pdf",
     weight = 2000,
     data = [
         "//projects/docs/data",
