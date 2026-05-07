@@ -1,3 +1,0 @@
-# Projects
-
-Here lies project documentation...

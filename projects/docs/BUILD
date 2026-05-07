@@ -8,7 +8,7 @@ doc_menu_item(
 
 doc_menu_item(
     name = "Resume",
-    url = "/docs/resume.pdf",
+    url = "/resume.pdf",
     weight = 2000,
     data = [
         "//projects/docs/data",
@@ -25,7 +25,7 @@ doc_publish(
         "//projects/math/docs",
         "//projects/research"
     ],
-    index = "index.md",
+    index = "//:README.md",
     menu = [
         ":GitHub",
         ":Resume",

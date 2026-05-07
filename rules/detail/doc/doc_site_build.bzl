@@ -9,8 +9,8 @@ def _doc_site_build_impl(ctx):
     static_files = []
     weight = 1
 
-    content_dir = ctx.actions.declare_directory("content/docs")
-    static_dir = ctx.actions.declare_directory("static/docs")
+    content_dir = ctx.actions.declare_directory("content")
+    static_dir = ctx.actions.declare_directory("static")
     script = ctx.actions.declare_file(str(ctx.label).replace("@@//", "").replace(":", "_").replace("/", "_") + "_build.sh")
     config = ctx.actions.declare_file("conf/config.yaml")
     formatter = ctx.executable._formatter
@@ -31,6 +31,7 @@ def _doc_site_build_impl(ctx):
         ),
         "",
         "mkdir -p '{out}'".format(out = content_dir.path),
+        "mkdir -p '{out}/docs'".format(out = content_dir.path),
         "mkdir -p '{out}'".format(out = static_dir.path),
         "mkdir -p '{out}/data'".format(out = content_dir.path),
         "cp '{tmpl}' '{config}'".format(
@@ -71,7 +72,7 @@ def _doc_site_build_impl(ctx):
         if DocSectionInfo in dep:
             section = dep[DocSectionInfo].output_dir
             section_files.append(section)
-            script_lines.append("'{formatter}' '{src}' '{out}/{file}/' --weight {weight}".format(
+            script_lines.append("'{formatter}' '{src}' '{out}/docs/{file}/' --weight {weight}".format(
                 formatter = formatter.path,
                 src = section.path,
                 out = content_dir.path,
@@ -82,7 +83,7 @@ def _doc_site_build_impl(ctx):
         else:
             file = dep.files.to_list()[0]  # Hacky
             section_files.append(file)
-            script_lines.append("'{formatter}' '{src}' '{out}/{file}' --weight {weight}".format(
+            script_lines.append("'{formatter}' '{src}' '{out}/docs/{file}' --weight {weight}".format(
                 formatter = formatter.path,
                 src = file.path,
                 out = content_dir.path,
@@ -95,7 +96,7 @@ def _doc_site_build_impl(ctx):
             data_files.append(file)
             script_lines.append("cp '{src}' '{out}/{file}'".format(
                 src = file.path,
-                out = content_dir.path,
+                out = static_dir.path,
                 file = file.basename,
             ))
     deps = [config_tmpl, ctx.file.index, linter_config] + section_files + data_files + static_files
