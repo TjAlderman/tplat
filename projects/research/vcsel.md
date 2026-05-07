@@ -1,0 +1,6 @@
+# Subsurface Scattering
+
+[Harnessing coherent illuminator properties to detect subsurface scattering](./vcsel.pdf)
+
+The coherent light output by a laser yields unique interference properties in comparison
+to incoherent light sources. This project harnesses these unique properties to discern bare skin from other categories present on the face within the constraints defined by a driver monitoring software (DMS) application context. More specifically, the project uses various laser speckle imaging techniques on vertical-cavity surface-emitting laser illuminated images to perform clustering of bare skin. Three distinct methods are investigated: beam profile analysis, laser speckle variation analysis and laser speckle contrast imaging (LSCI). All methods are evaluated and a comparison is made highlighting the respective benefits and drawbacks of each technique in a DMS application context. In the final implementation, a convolutional neural network is trained to use temporal LSCI processed images to effectively classify skin. A comparison of models trained on light-emitting diode (LED) versus VCSEL illuminated datasets is presented and a consistent improvement in classification performance is demonstrated for the VCSEL models. Finally, a comprehensive evaluation is provided into the limitations of this model.

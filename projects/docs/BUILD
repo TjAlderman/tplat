@@ -23,6 +23,7 @@ doc_publish(
         "//projects/cryptography/docs",
         "//projects/linux",
         "//projects/math/docs",
+        "//projects/research"
     ],
     index = "index.md",
     menu = [
