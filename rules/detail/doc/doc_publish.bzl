@@ -31,18 +31,29 @@ def doc_publish(name, theme = "book", skip_validation = False, **kwargs):
         )
 
     native.filegroup(
+        name = name + "_site.prepare.content",
+        srcs = [":" + name + "_site.prepare"],
+        output_group = "content",
+    )
+    native.filegroup(
         name = name + "_site.prepare.config",
         srcs = [":" + name + "_site.prepare"],
         output_group = "config",
+    )
+    native.filegroup(
+        name = name + "_site.prepare.static",
+        srcs = [":" + name + "_site.prepare"],
+        output_group = "static",
     )
 
     hugo_site(
         name = name + "_site.build",
         config = ":" + name + "_site.prepare.config",
-        content = [":" + name + "_site.prepare"],
-        # static = native.glob(["static/**"]),
+        content = [":" + name + "_site.prepare.content"],
+        static = [":" + name + "_site.prepare.static"],
         layouts = ["//rules/detail/doc/data:layouts"],
         theme = ":" + theme,
+        quiet = False,
     )
 
     hugo_serve(
