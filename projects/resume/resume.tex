@@ -1,0 +1,202 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Twenty Seconds Resume/CV
+% LaTeX Template
+% Version 1.0 (14/7/16)
+%
+% Original author:
+% Carmine Spagnuolo (cspagnuolo@unisa.it) with major modifications by 
+% Vel (vel@LaTeXTemplates.com) and Harsh (harsh.gadgil@gmail.com)
+%
+% License:
+% The MIT License (see included LICENSE file)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[letterpaper]{twentysecondcv} % a4paper for A4
+
+% Command for printing skill overview bubbles
+\newcommand\skills{ 
+~
+	\smartdiagram[bubble diagram]{
+        \textbf{Electrical}\\\textbf{Engineering},
+        \textbf{~~~~~~~Machine~~~~~~~}\\\textbf{~~Learning~~},
+        \textbf{~~~~~MLOps~~~~~~},
+        \textbf{~~~~~Optics~~~~~},
+        \textbf{~~~~~DevOps~~~~~}
+    }
+}
+
+% Programming skill bars
+\programming{{Simulink $\textbullet$ LabVIEW / 1}, {C $\textbullet$ C++ $\textbullet$ Verilog / 2}, {Python $\textbullet$ MATLAB $\textbullet$ Starlark / 5}}
+
+% Projects text
+\education{
+\textbf{Bachelor of Engineering (Research \& Development) (Honours)} (GPA: 6.531) \\
+\textbf{Major:} Electronic and Communication Systems \\
+\textbf{Minor:} Mechatronics \\
+Australian Excellence Scholarship \\
+Australian National University \\
+2021 - 2024 | Canberra, Australia
+}
+
+%----------------------------------------------------------------------------------------
+%	 PERSONAL INFORMATION
+%----------------------------------------------------------------------------------------
+% If you don't need one or more of the below, just remove the content leaving the command, e.g. \cvnumberphone{}
+
+\cvname{Timothy Alder} % Your name
+\cvjobtitle{ Electrical Engineer } % Job
+% title/career
+
+\cvlinkedin{/in/timothyalder}
+\cvgithub{timothyalder}
+\cvnumberphone{(61) 478 293 399} % Phone number
+\cvsite{https://timothyalder.github.io/tplat/} % Personal website
+\renewcommand{\cvsiteformat}[1]{%
+https://timothyalder.github.io/\linebreak tplat/%
+} % Custom linebreak for long site name
+\cvmail{aldertimothy@gmail.com} % Email address
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\makeprofile % Print the sidebar
+ 
+%----------------------------------------------------------------------------------------
+%	 EXPERIENCE
+%----------------------------------------------------------------------------------------
+
+\section{Experience}
+
+\begin{twenty} % Environment for a list with descriptions
+\twentyitem
+    	{Feb 2026 -}
+		{Present}
+        {Hardware Engineer}
+        {\href{https://www.defence.gov.au}{Department of Defence}}
+        {}
+        {
+        {\begin{itemize}
+        \item Building a stronger, more resilient Australia.
+        \item \textbf{Skills:} Threat Modelling, Embedded Design, Hack the Box
+        \item \textbf{Tools:} Verilog, Vivado, Vitis 
+    \end{itemize}}
+        }
+    \\   
+    \twentyitem
+   		{Jan 2025 -}
+		{Jan 2026}
+        {Machine Learning Engineer}
+        {\href{https://seeingmachines.com}{Seeing Machines}}
+        {}
+        {
+        {\begin{itemize}
+        \item Technical lead; 3D vision-based solutions for biosensing.
+        \item Technical lead; generative AI for identity anonymisation and synthetic data generation.
+        \item Technical lead; parallelised, scalable algorithm validation system.
+        \item \textbf{Skills:} Machine Learning,  MLOps, DevOps, Project Management
+        \item \textbf{Tools:} Docker; AWS S3, Batch, ECR
+    \end{itemize}}
+        }
+     \\
+     \twentyitem
+   		{Mar 2022 -}
+		{Dec 2024}
+        {Undergraduate Optical Engineer}
+        {\href{https://seeingmachines.com}{Seeing Machines}}
+        {}
+        {
+        \begin{itemize}
+        \item Automated all major optical test procedures using Python and C++ to control a spectrometer, goniometer, and camera frame grabber hardware; as well as \href{https://www.ansys.com/products/optics/ansys-zemax-opticstudio}{Zemax} and \href{https://www.imatest.com}{Imatest} software. Developed user-friendly GUIs using PyQt, improving accessibility and reducing manual errors.
+        \item Programmatic implementation of \href{https://www.iso.org/standard/88626.html}{ISO12233}, achieving >10x speed improvement over existing industry-standard software while eliminating >\$20,000/year licensing costs.
+         \item \textbf{Skills:} Optics, Test Automation, OOP, CI/CD 
+        \item \textbf{Tools:} Python, C++, OpenCV, Bazel, Jenkins 
+    \end{itemize}
+    	}
+        
+	%\twentyitem{<dates>}{<title>}{<location>}{<description>}
+\end{twenty}
+
+%----------------------------------------------------------------------------------------
+%	 RESEARCH
+%----------------------------------------------------------------------------------------
+\section{Research}
+\begin{twenty}
+	\twentyitem
+    	{2020 - 2020}
+		{}
+        {B.Eng. (R\&D) (Hons.), Undergraduate}
+        {\href{https://www.anu.edu.au}{Australian National University}}
+        {}
+        {
+       	\textbf{Thesis:} \href{https://timothyalder.github.io/tplat/docs/projects_research_research.output/thesis.pdf}{\textit{DepthPhys: Near-Infrared Remote Photoplethysmography in Driver Monitoring Systems}}
+        {\begin{itemize}
+        \item Novel deep learning approach to remote photoplethysmography using bespoke three-dimensional vision system.
+        \item Collection of a large dataset of naturalistic driving data with varying ambient illumination, behavioural, and physiological conditions.
+        \vspace{2mm}
+		\end{itemize}}
+        }
+    \twentyitem
+    	{2022 - 2023}
+		{}
+        {B.Eng. (R\&D) (Hons.), Undergraduate}
+        {\href{https://www.anu.edu.au}{Australian National University}}
+        {}
+        {
+       	\href{https://timothyalder.github.io/tplat/docs/projects_research_research.output/vcsel.pdf}{\textit{Harnessing coherent illuminator properties to detect subsurface scattering}}
+        {\begin{itemize}
+        \item Vertical-cavity surface-emitting lasers (VCSELs) for material classification under varying ambient illumination conditions.
+        \vspace{2mm}
+		\end{itemize}}
+        }
+    \twentyitem
+    	{2022 - 2022}
+		{}
+        {B.Eng. (R\&D) (Hons.), Undergraduate}
+        {\href{https://www.anu.edu.au}{Australian National University}}
+        {}
+        {
+       	\href{https://timothyalder.github.io/tplat/docs/projects_research_research.output/bushfire.pdf}{\textit{Power Requirements of Ground-Based Bushfire Detection Devices}}
+        {\begin{itemize}
+        \item Literature review investigating the power requirements of various sensors for application in a remote distributed IoT bushfire detection network.
+        \end{itemize}}
+        }
+\end{twenty}
+
+%----------------------------------------------------------------------------------------
+%	 Hobbies
+%----------------------------------------------------------------------------------------
+\section{Hobbies}
+\begin{twenty}
+	\twentyitem
+    	{Sports}
+		{}
+        {Martial Arts}
+        {\href{https://darkcarnival.com.au}{Dark Carnival}, \href{https://www.clublime.com.au}{Club Lime}}
+        {Muay Thai, Brazilian Jiu Jitsu \\ Strength Training}
+        {}
+    \twentyitem
+    	{Technical}
+		{}
+        {Home Automation}
+        {}
+        {Home Assistant, Networking}
+        {}
+    \twentyitem
+    	{Misc.}
+		{}
+        {Motorbikes, music, puzzles, bread, ... mint chocolate}
+        {}
+        {}
+        {}
+\end{twenty}
+
+% \section{Publications}
+% L. Antonie, H. Gadgil, G. Grewal, and K. Inwood, “Historical Data Integration - A Study of WWI Canadian Soldiers,” in 2016 IEEE 16th International Conference on Data Mining Workshops (ICDMW), pp. 186-193, IEEE, 2016. \vspace{2mm}
+
+\end{document} 
