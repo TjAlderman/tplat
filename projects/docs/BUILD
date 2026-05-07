@@ -2,8 +2,17 @@ load("//rules:doc.bzl", "doc_publish", "doc_menu_item")
 
 doc_menu_item(
     name = "GitHub",
-    url ="https://github.com/timothyalder/tplat",
+    url = "https://github.com/timothyalder/tplat",
     weight=1000,
+)
+
+doc_menu_item(
+    name = "Resume",
+    pageRef = "/docs/resume.pdf",
+    weight = 2000,
+    data = [
+        "//projects/docs/data",
+    ],
 )
 
 doc_publish(
@@ -18,6 +27,7 @@ doc_publish(
     index = "index.md",
     menu = [
         ":GitHub",
+        ":Resume",
     ],
     title = "tplat",
     visibility = ["//visibility:public"],
