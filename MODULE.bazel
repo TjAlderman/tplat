@@ -20,12 +20,12 @@ bazel_dep(name = "rules_multirun", version = "0.13.0")
 bazel_dep(name = "rules_ruby", version = "0.21.1")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 bazel_dep(name = "rules_shell", version = "0.6.1")
-bazel_dep(name = "bazel_latex")
+bazel_dep(name = "bazel_latex", version = "1.2.2")
 
 git_override(
-    module_name = "bazel_latex", 
+    module_name = "bazel_latex",
     remote = "https://github.com/ProdriveTechnologies/bazel-latex.git",
-    commit = "227b02f346c1dd0098d32b5bcb1ef874dd367e2a",
+    commit = "c43a03d",
 )
 
 # Directives related to module extensions
