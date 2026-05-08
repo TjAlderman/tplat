@@ -1,0 +1,14 @@
+bazel_dep(name = "bazel_latex", version = "1.2.2")
+
+git_override(
+    module_name = "bazel_latex",
+    remote = "https://github.com/ProdriveTechnologies/bazel-latex.git",
+    commit = "c43a03dc4dd56097bb153f4abb7dbbdc5b66fdf1",
+)
+
+texlive_repositories = use_extension("@bazel_latex//:extensions.bzl", "texlive_repositories")
+texlive_repositories.install()
+use_repo(
+    texlive_repositories,
+    "bazel_latex_texlive",
+)
