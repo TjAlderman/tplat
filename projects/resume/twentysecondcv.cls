@@ -7,11 +7,11 @@
 %-----------------------------------------------------------------------	-----------------
 
 \RequirePackage[quiet]{fontspec}
-\RequirePackage[sfdefault]{ClearSans}
+\setmainfont{Clear Sans}
 
-\def\arrow#1{\pspicture[shift=2pt](#1,0)\psline{->}(#1,0)\endpspicture}
-
-\usepackage{pstricks}
+\newcommand{\arrow}[1]{%
+  \tikz[baseline=-0.5ex]\draw[->] (0,0) -- (#1,0);
+}
 
 \usepackage{fontawesome}
 \RequirePackage{tikz}
