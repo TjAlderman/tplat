@@ -21,6 +21,7 @@ doc_publish(
         "//projects/threat_modelling/docs",
         "//projects/fpga/docs",
         "//projects/cryptography/docs",
+        "//projects/networking/docs",
         "//projects/linux",
         "//projects/math/docs",
         "//projects/research"
