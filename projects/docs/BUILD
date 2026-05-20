@@ -22,6 +22,7 @@ doc_publish(
         "//projects/fpga/docs",
         "//projects/cryptography/docs",
         "//projects/networking/docs",
+        "//projects/ghidra/docs",
         "//projects/linux",
         "//projects/math/docs",
         "//projects/research"
