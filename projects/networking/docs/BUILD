@@ -5,6 +5,7 @@ doc_section(
     srcs = [
         "//projects/networking/gopher/docs",
         "//projects/networking/mqtt/docs",
+        "lan.md",
     ],
     index = "index.md",
     visibility = ["//visibility:public"],

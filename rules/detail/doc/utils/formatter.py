@@ -53,6 +53,8 @@ def transform_file(src: str, dest: str, weight: int = 10):
         f"weight: {weight}",
         f"slug: {title.lower().replace(' ', '-')}",
         "bookCollapseSection: true",
+        "libraries:",
+        "- wavedrom",
         "---",
         "",
     ]

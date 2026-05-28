@@ -1,0 +1,17 @@
+<script type="WaveDrom" class="wavedrom">
+{
+{{- .Inner | safeJS -}}
+}
+</script>
+
+{{- if not (.Page.Store.Get "wavedrom") -}}
+<script src="https://cdn.jsdelivr.net/npm/wavedrom@2.3.0/wavedrom.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  WaveDrom.ProcessAll();
+});
+</script>
+
+{{- .Page.Store.Set "wavedrom" true -}}
+{{- end -}}
