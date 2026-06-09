@@ -1,54 +1,45 @@
 # Shell
 
+A shell is the command interpreter between the user and the kernel.
+
 ## Overview
 
-A **shell** is a command-line interface (CLI) that mediates between the user and the OS kernel. It accepts commands, executes programs, and manages I/O streams.
+- A terminal emulator provides the GUI surface
+- The shell parses commands, runs programs, and manages I/O
+- The kernel executes the underlying work
 
-> Terminology:
+## Reference
 
-* **Terminal**: Interface for interacting with a shell
-* **Console**: Physical or virtual text display (historically distinct from terminal windows)
+### Terminal terms
 
-## Terminal Emulators
+| Term | Meaning |
+| --- | --- |
+| Terminal | Interface for interacting with a shell |
+| Console | Physical or virtual text display |
+| Terminal emulator | GUI application for running shell sessions |
 
-A **terminal emulator** provides a GUI-based environment to run shell sessions.
+### Terminal emulators
 
-Examples:
+- GNOME Terminal
+- iTerm2
+- Windows Terminal
 
-* GNOME Terminal
-* iTerm2
-* Windows Terminal
+### Common shells
 
-### Characteristics
-
-* Emulates legacy text terminals
-* Supports multiple sessions (tabs/panes)
-* Provides access to CLI tools within a GUI
-
-## Shell
-
-The shell is the **command interpreter** responsible for:
-
-* Parsing user input
-* Executing commands/programs
-* Managing processes and I/O redirection
-
-### Common Shells
-
-| Shell     | Description                                |
-| --------- | ------------------------------------------ |
-| Bash      | Default on most Linux systems; GNU project |
-| Zsh       | Extended Bash with improved UX/features    |
-| Fish      | User-friendly, modern shell                |
-| KornShell | Advanced scripting capabilities            |
-| Tcsh      | C-shell derivative                         |
+| Shell | Description |
+| --- | --- |
+| Bash | Default on many Linux systems |
+| Zsh | Extended shell with more UX features |
+| Fish | User-friendly modern shell |
+| KornShell | Advanced scripting features |
+| Tcsh | C-shell derivative |
 
 ## Mental Model
 
-* **Terminal emulator** = interface
-* **Shell** = interpreter
-* **Kernel** = execution layer
+- Terminal = interface
+- Shell = interpreter
+- Kernel = execution layer
 
-```
+```text
 User -> Terminal -> Shell -> Kernel -> Hardware
 ```

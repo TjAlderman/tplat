@@ -15,7 +15,11 @@ Welcome to the tplat repository! This repository hosts an array of personal and 
 
 Some of the topics investigated in the repository include:
 
+* DevOps
+* MLOps
+* Networking
+* Threat modelling
+* Cryptography
 * Computer vision
 * Signal processing
 * Machine learning
-* Home automation

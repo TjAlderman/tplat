@@ -1,124 +1,99 @@
 # Permissions
 
-Linux permissions control access to files and directories via a **user–group–others** model. Each filesystem object is associated with:
+Linux permissions use an owner, group, and others model to control access to files and directories.
 
-* **Owner (user)**
-* **Group**
-* **Permissions** defining allowed operations
+## Overview
 
-Users can belong to multiple groups, inheriting access rights accordingly.
+- Permission bits define read, write, and execute access
+- Files and directories interpret those bits differently
+- `chmod`, `chown`, and special bits modify access rules
 
-## Permission Types
+## Reference
 
-| Symbol | Name    | Meaning                                       |
-| ------ | ------- | --------------------------------------------- |
-| `r`    | Read    | View file contents or list directory contents |
-| `w`    | Write   | Modify file or directory contents             |
-| `x`    | Execute | Run file or traverse directory                |
+### Permission types
 
-## Permission Scope
+| Symbol | Meaning |
+| --- | --- |
+| `r` | Read |
+| `w` | Write |
+| `x` | Execute |
 
-Permissions are defined for three classes:
+### Permission scope
 
-| Scope      | Description               |
-| ---------- | ------------------------- |
-| User (u)   | File owner                |
-| Group (g)  | Users in the file’s group |
-| Others (o) | All other users           |
+| Scope | Meaning |
+| --- | --- |
+| `u` | Owner |
+| `g` | Group |
+| `o` | Others |
 
-## Directory vs File Semantics
+### File vs directory semantics
 
-Permissions behave differently depending on object type.
+| Object | `r` | `w` | `x` |
+| --- | --- | --- | --- |
+| File | Read contents | Modify contents | Execute file |
+| Directory | List entries | Create or remove entries | Traverse directory |
 
-### Files
+- Directory traversal requires `x`, even if `r` is set
+- `x` on a directory does not mean you can execute files inside it
+- Changing directory contents requires `w` on the directory itself
 
-* `r`: Read file contents
-* `w`: Modify file contents
-* `x`: Execute file (if binary/script)
-
-### Directories
-
-* `r`: List directory contents (`ls`)
-* `w`: Create, delete, rename entries
-* `x`: Traverse directory (`cd`, access entries)
-
-**Important constraints:**
-
-* Directory traversal **requires `x`**, regardless of `r`
-* `x` on a directory **does not grant execution of contained files**
-* Modifying directory contents requires **`w` on the directory**, not the files
-
-## Permission Representation
-
-Permissions are displayed via `ls -l`:
+### Representation
 
 ```bash
 ls -l /etc/passwd
-```
-
-Example output:
-
-```bash
 -rwxrw-r-- 1 root root 1641 May 4 23:42 /etc/passwd
 ```
 
-### Breakdown
+| Segment | Meaning |
+| --- | --- |
+| `-` | File type |
+| `rwx` | Owner permissions |
+| `rw-` | Group permissions |
+| `r--` | Others permissions |
+| `1` | Hard link count |
+| `root root` | Owner and group |
+| `1641` | File size |
+| `May 4 23:42` | Last modified |
 
-```
--rwxrw-r--
-││  │  │
-││  │  └── Others:  r--
-││  └───── Group:   rw-
-│└──────── Owner:   rwx
-└───────── Type:    -
-```
+### Octal notation
 
-### Fields
+| Value | Permission |
+| --- | --- |
+| `4` | Read |
+| `2` | Write |
+| `1` | Execute |
 
-| Segment       | Meaning                                          |
-| ------------- | ------------------------------------------------ |
-| `-`           | File type (`-` file, `d` directory, `l` symlink) |
-| `rwx`         | Owner permissions                                |
-| `rw-`         | Group permissions                                |
-| `r--`         | Others permissions                               |
-| `1`           | Number of hard links                             |
-| `root root`   | Owner and group                                  |
-| `1641`        | File size (bytes)                                |
-| `May 4 23:42` | Last modified                                    |
-| `/etc/passwd` | File path                                        |
+| Example | Meaning |
+| --- | --- |
+| `7` | `rwx` |
+| `6` | `rw-` |
+| `5` | `r-x` |
+| `4` | `r--` |
 
-## Octal (Numeric) Representation
-
-Permissions map to octal values:
-
-| Permission | Value |
-| ---------- | ----- |
-| `r`        | 4     |
-| `w`        | 2     |
-| `x`        | 1     |
-
-Each scope is summed:
-
-| Example       | Meaning |
-| ------------- | ------- |
-| `7` (`4+2+1`) | `rwx`   |
-| `6` (`4+2`)   | `rw-`   |
-| `5` (`4+1`)   | `r-x`   |
-| `4`           | `r--`   |
-
-### Example
-
-```
-rwxrw-r-- → 764
+```text
+rwxrw-r-- = 764
 ```
 
-* Owner: `rwx` = 7
-* Group: `rw-` = 6
-* Others: `r--` = 4
+### Modifying permissions
+
+```bash
+chmod a+r shell
+chmod 754 shell
+chown <user>:<group> <file-or-directory>
+```
+
+- `chmod` adds or removes permissions with symbolic or numeric modes
+- `chown` changes the owner and optionally the group
+
+### Special bits
+
+- SUID and SGID run a program with the file owner's or group's privileges
+- The sticky bit prevents users from deleting files they do not own in shared directories
+- In `ls -l`, `s` replaces `x` for SUID or SGID, and `t` marks the sticky bit
 
 ## Mental Model
 
-* **Ownership defines baseline control**
-* **Groups extend access across users**
-* **Permissions gate operations**
-* **Directories control access to structure; files control access to content**
+- Ownership sets the baseline
+- Groups extend access
+- Permission bits gate operations
+- Special bits change how execution and deletion behave

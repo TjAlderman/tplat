@@ -1,141 +1,89 @@
 # Core Linux Commands
 
-## `man`
+Common commands are easier to remember when grouped by discovery, inspection, navigation, and search.
 
-Display manual pages for commands:
+## Overview
 
-```bash
-man ls
-```
+- `man` and `apropos` help you discover commands
+- `which` resolves the executable that will run
+- `find` is precise and real-time; `locate` is fast and indexed
 
-* Comprehensive reference (syntax, options, behaviour)
-* Organized into sections (e.g., user commands, system calls)
+## Reference
 
-## `apropos`
+### Discovery
 
-Search manual page descriptions by keyword:
+| Command | Purpose |
+| --- | --- |
+| `man` | Read manual pages |
+| `apropos` | Search manual page descriptions by keyword |
+| `explainshell` | External reference for command syntax |
 
-```bash
-apropos network
-```
+### System inspection
 
-* Useful when you don’t know the exact command name
+| Command | Purpose |
+| --- | --- |
+| `whoami` | Print the current user |
+| `id` | Show user and group IDs |
+| `hostname` | Get or set the hostname |
+| `uname` | Show kernel and system information |
+| `pwd` | Print the current directory |
+| `env` | Show or set environment variables |
+| `ps` | Inspect processes |
+| `who` | Show logged-in users |
+| `lsof` | Show open files |
+| `lsblk` | List block devices |
+| `lsusb` | List USB devices |
+| `lspci` | List PCI devices |
 
-## External Resource
+### Networking
 
-* explainshell — explains command syntax interactively
+| Command | Purpose |
+| --- | --- |
+| `ifconfig` | Legacy network interface tool |
+| `ip` | Modern network interface tool |
+| `netstat` | Legacy network status tool |
+| `ss` | Inspect sockets |
 
-## Common System Commands
+### File and path utilities
 
-| Command    | Description                       |
-| ---------- | --------------------------------- |
-| `whoami`   | Print current user                |
-| `id`       | Show user and group IDs           |
-| `hostname` | Get/set system hostname           |
-| `uname`    | System/kernel information         |
-| `pwd`      | Print current directory           |
-| `env`      | Show or set environment variables |
-
-## Networking
-
-| Command    | Description                                        |
-| ---------- | -------------------------------------------------- |
-| `ifconfig` | Configure/view network interfaces (legacy)         |
-| `ip`       | Modern network configuration tool                  |
-| `netstat`  | Network status (legacy)                            |
-| `ss`       | Socket inspection (modern replacement for netstat) |
-
-## Process & System Inspection
-
-| Command | Description             |
-| ------- | ----------------------- |
-| `ps`    | Process status          |
-| `who`   | Logged-in users         |
-| `lsof`  | Open files by processes |
-
-## Hardware Inspection
-
-| Command | Description           |
-| ------- | --------------------- |
-| `lsblk` | Block devices (disks) |
-| `lsusb` | USB devices           |
-| `lspci` | PCI devices           |
-
-## File & Path Utilities
-
-### `ls`
-
-List directory contents:
+| Command | Purpose |
+| --- | --- |
+| `ls` | List directory contents |
+| `cd` | Change directory |
+| `which` | Show the executable path for a command |
 
 ```bash
 ls -l /etc
-```
-
-### `which`
-
-Locate executable in `$PATH`:
-
-```bash
 which python
 ```
 
-* Returns the path of the command being executed
+`ls -a` includes hidden files. `cd -` returns to the previous directory.
 
-## File Search
-
-### `find`
-
-Search filesystem with filters and actions.
-
-#### Example
+### File search
 
 ```bash
 find / -type f -name "*.conf" -user root -size +20k -newermt 2020-03-03 -exec ls -al {} \; 2>/dev/null
-```
-
-#### Key Options
-
-| Option           | Description                            |
-| ---------------- | -------------------------------------- |
-| `-type f`        | Search for files (`d` for directories) |
-| `-name "*.conf"` | Match filename pattern                 |
-| `-user root`     | Filter by owner                        |
-| `-size +20k`     | Files larger than 20 KiB               |
-| `-newermt DATE`  | Modified after date                    |
-| `-exec ... {}`   | Execute command per result             |
-| `2>/dev/null`    | Suppress errors (not a `find` option)  |
-
-#### Notes
-
-* `{}` is replaced with each match
-* `\;` terminates `-exec` (escaped to avoid shell interpretation)
-
-### `locate`
-
-Fast file search using indexed database:
-
-```bash
 locate "*.conf"
-```
-
-#### Update Database
-
-```bash
 sudo updatedb
 ```
 
-#### Characteristics
+| Option | Purpose |
+| --- | --- |
+| `-type f` | Search for files |
+| `-name "*.conf"` | Match a filename pattern |
+| `-user root` | Filter by owner |
+| `-size +20k` | Match files larger than 20 KiB |
+| `-newermt DATE` | Match files modified after a date |
+| `-exec ... {}` | Run a command for each result |
 
-| Feature       | `find`         | `locate`       |
-| ------------- | -------------- | -------------- |
-| Search Method | Real-time scan | Prebuilt index |
-| Speed         | Slower         | Very fast      |
-| Accuracy      | Always current | May be stale   |
-| Filtering     | Advanced       | Limited        |
+| Tool | Strength |
+| --- | --- |
+| `find` | Real-time, flexible, slower |
+| `locate` | Indexed, fast, may be stale |
 
 ## Mental Model
 
-* Use **`man` / `apropos`** for discovery
-* Use **`which`** to resolve execution path
-* Use **`find`** for precise, real-time queries
-* Use **`locate`** for fast, broad searches
+- Use `man` or `apropos` to discover commands
+- Use `which` to verify what will run
+- Use `find` for precise queries
+- Use `locate` for fast broad searches
