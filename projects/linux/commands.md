@@ -69,7 +69,29 @@ List directory contents:
 
 ```bash
 ls -l /etc
+total 40
+lrwxr-xr-x   1 timothyalder  staff   146 Apr 21 00:02 bazel-bin -> /Users/timothyalder/...
+lrwxr-xr-x   1 timothyalder  staff   118 Apr 21 00:02 bazel-out -> /Users/timothyalder/...
+...
 ```
+
+First, we see the total amount of blocks (1024-byte) used by the files and directories listed in the current directory, which indicates the total size used. That means it used 40 blocks * 1024 bytes/block = 32,768 bytes (or 32 KB) of disk space. Next, we see a few columns that are structured as follows:
+
+| Column Content | Description |
+| --- | --- |
+| lrwxr-xr-x | Type and permissions |
+| 1 | Number of hard links to the file/directory |
+| cry0l1t3 | Owner of the file/directory |
+| timothyalder | Group owner of the file/directory |
+| 146 | Size of the file or the number of blocks used to store the directory information |
+| Apr 21 00:02 | Date and time |
+| bazel-bin | Directory name |
+
+Hidden contents (folders and files beginning with `.`) may be listed using `ls -a`
+
+### `cd`
+
+Navigate to directory ("choose directory"). `cd -` will return to the previous directory
 
 ### `which`
 
