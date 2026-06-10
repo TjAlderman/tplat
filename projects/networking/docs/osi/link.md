@@ -14,4 +14,6 @@ This layer is the protocol layer that transfers data (i.e. frames) between **nod
 * Quality of service control
 * VLANs
 
-MAC addresses live at the data link layer.
+## MAC Addresses
+
+MAC addresses live at the data link layer. This address is a 48-bit 6 octet address represented in hexadecimal format
