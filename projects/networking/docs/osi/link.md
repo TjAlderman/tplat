@@ -11,4 +11,6 @@ The data link layer handles:
 
 ## MAC Addresses
 
-MAC addresses live at the data link layer. They are 48-bit, six-octet identifiers represented in hexadecimal format.
+## MAC Addresses
+
+MAC addresses live at the data link layer. This address is a 48-bit 6 octet address represented in hexadecimal format
