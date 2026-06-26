@@ -30,4 +30,4 @@ Common protocols include `arp`, `ether`, `fddi`, `icmp`, `ip`, `ip6`, `link`, `p
 | Parentheses | `( )` |
 | Negation | `!=` |
 | Concatenation | `&&` or `and` |
-| Alteration | `||` or `or` |
+| Alteration | `\|\|` or `or` |
