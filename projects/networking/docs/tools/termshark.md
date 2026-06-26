@@ -1,3 +1,3 @@
 # Termshark
 
-Termshark is a Text-based User Interface (TUI) application that provides the user with a Wireshark-like interface right in your terminal window.
+Termshark is a text-based user interface (TUI) application that provides a Wireshark-like interface in the terminal.

@@ -3,6 +3,9 @@
 The data link layer transfers frames between nodes on the same local network segment. It can also detect and sometimes correct errors from the physical layer.
 
 The data link layer handles:
+The data link layer transfers frames between nodes on the same local network segment. It can also detect and sometimes correct errors from the physical layer.
+
+The data link layer handles:
 
 * Frame encapsulation.
 * Physical addressing.
@@ -11,6 +14,4 @@ The data link layer handles:
 
 ## MAC Addresses
 
-## MAC Addresses
-
-MAC addresses live at the data link layer. This address is a 48-bit 6 octet address represented in hexadecimal format
+MAC addresses live at the data link layer. They are 48-bit, six-octet identifiers represented in hexadecimal format.
