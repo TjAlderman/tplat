@@ -1,37 +1,52 @@
 # Network Traffic Analysis
 
-If an attacker reaches a network, they must communicate with its infrastructure. Traffic analysis helps identify suspicious activity, establish baselines, and investigate incidents.
+If an attacker seeks to breach a network, they must inevitably communicate with it's infrastructure. Network traffic analysis can be a valuable tool for detecting the threat actors. Network traffic analysis can be used for:
 
-Useful tools and collection points:
+* Collecting real-time traffic within the network to analyze upcoming threats.
+* Setting a baseline for day-to-day network communications.
+* Identifying and analyzing traffic from non-standard ports, suspicious hosts, and issues with networking protocols such as HTTP errors, problems with TCP, or other networking misconfigurations.
+* Detecting malware on the wire, such as ransomware, exploits, and non-standard interactions.
+* NTA is also useful when investigating past incidents and during threat hunting.
 
-* `tcpdump`: command-line capture and decode tool for live traffic or capture files.
-* `TShark`: command-line variant of Wireshark.
-* `Wireshark`: graphical packet analyzer for deep inspection.
-* `NGrep`: pattern-matching tool for live traffic or PCAPs.
-* `tcpick`: packet sniffer for tracking and reassembling TCP streams.
-* Network taps: devices that copy traffic for analysis.
-* SPAN ports: mirrored switch ports that send traffic to a collection point.
-* Elastic Stack: ingest and visualize data from multiple sources.
-* SIEMs: centralized platforms for alerting, analysis, and investigation.
+| Tool | Description |
+| tcpdump | tcpdump is a command-line utility that, with the aid of LibPcap, captures and interprets network traffic from a network interface or capture file. |
+| Tshark | TShark is a network packet analyzer much like TCPDump. It will capture packets from a live network or read and decode from a file. It is the command-line variant of Wireshark. |
+| Wireshark | Wireshark is a graphical network traffic analyzer. It captures and decodes frames off the wire and allows for an in-depth look into the environment. It can run many different dissectors against the traffic to characterize the protocols and applications and provide insight into what is happening. |
+| NGrep | NGrep is a pattern-matching tool built to serve a similar function as grep for Linux distributions. The big difference is that it works with network traffic packets. NGrep understands how to read live traffic or traffic from a PCAP file and utilize regex expressions and BPF syntax. This tool shines best when used to debug traffic from protocols like HTTP and FTP. |
+| tcpick | tcpick is a command-line packet sniffer that specializes in tracking and reassembling TCP streams. The functionality to read a stream and reassemble it back to a file with tcpick is excellent. |
+| Network Taps | Taps (Gigamon, Niagra-taps) are devices capable of taking copies of network traffic and sending them to another place for analysis. These can be in-line or out of band. They can actively capture and analyze the traffic directly or passively by putting the original packet back on the wire as if nothing had changed. |
+| Networking Span Ports | Span Ports are a way to copy frames from layer two or three networking devices during egress or ingress processing and send them to a collection point. Often a port is mirrored to send those copies to a log server. |
+| Elastic Stack | The Elastic Stack is a culmination of tools that can take data from many sources, ingest the data, and visualize it, to enable searching and analysis of it. |
+| SIEMS | SIEMS (such as Splunk) are a central point in which data is analyzed and visualized. Alerting, forensic analysis, and day-to-day checks against the traffic are all use cases for a SIEM. |
 
-The best placement for a tap is in a layer 3 link between switched segments. It allows you to capture traffic that leaves the local network, and VLAN segmentation does not change that view.
+The best placement for a tap is in a layer three link between switched segments. It allows for the capture of any traffic routing outside of the local network. A switched port or VLAN segmentation does not filter our view here.
 
 ## Process
 
-This is not an exact science. The process is dynamic and depends on what you are looking for and where you have visibility into the network.
+This is not an exact science. It can be a very dynamic process and is not a direct loop. It is greatly influenced by what we are looking for (network errors vs. malicious actions) and where you have visibility into your network. Analysis can be distilled down to a few basic tenets, however.
 
 ### Descriptive Analysis
 
-Establish a baseline and define the scope. What is the issue, what are you looking for, and which hosts or protocols matter?
+Establish a baseline. Define the scope
+
+1. What is the issue?
+2. What are we looking for, and when?
+3. Define our target(s) (net / host(s) / protocol)
 
 ### Diagnostic Analysis
 
-Clarify the causes, effects, and interactions of the problem. Capture traffic, filter the relevant data, and interpret what the capture shows.
+Clarifies the causes, effects, and interactions of conditions
+
+4. Capture network traffic
+5. Identification relevant traffic (filtering)
+6. Understand captured traffic
 
 ### Predictive Analysis
 
-Use the findings to identify trends, detect deviations early, and anticipate future occurrences. Keep notes as you go so the findings can be reused later.
+Makes it possible to identify trends, detect deviations from expected values at an early stage, and predict future occurrences as accurately as possible.
+
+7. Note-taking, summarise existing analysis
 
 ### Prescriptive Analysis
 
-Narrow down the actions needed to eliminate the problem or prevent it from recurring.
+narrow down what actions to take to eliminate or prevent a future problem or trigger a specific activity or process. To prescribe a solution is the culmination of this workflow.
