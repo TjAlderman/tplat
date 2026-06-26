@@ -1,6 +1,6 @@
 # tcpdump
 
-`tcpdump` is a command-line packet sniffer that can capture and interpret data frames from a file or network interface. It supports [Berkeley Packet Filter](../bpf.md) syntax.
+`tcpdump` is a command-line packet sniffer that can capture and interpret data frames from a file or network interface. It supports [Berkeley Packet Filter](../../bpf.md) syntax.
 
 To capture network traffic from the wire, it uses `pcap` and `libpcap` with an interface in promiscuous mode. This lets the program see packets sourced from or destined for any device on the local network, not just traffic addressed to the host.
 
