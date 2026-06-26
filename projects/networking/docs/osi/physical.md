@@ -1,3 +1,3 @@
 # Physical Layer
 
-The physical layer provides an electrical, mechanical, and procedural interface to the transmission medium. The shapes and properties of the electrical connectors, the frequencies to transmit on, the line code to use and similar low-level parameters are specified by the physical layer.
+The physical layer defines the electrical, mechanical, and procedural interface to the transmission medium. It covers connectors, signalling, line coding, frequencies, and other low-level transmission details.

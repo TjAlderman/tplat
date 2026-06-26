@@ -7,7 +7,7 @@ flowchart LR
 
 subgraph Bit
     Physical
-end 
+end
 
 subgraph Frame
     Link

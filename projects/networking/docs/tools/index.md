@@ -1,3 +1,3 @@
 # Tools
 
-Tools used for network traffic analysis.
+Reference notes for tools used during network traffic analysis.

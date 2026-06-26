@@ -1,40 +1,39 @@
 # tcpdump
 
-`tcpdump` is a command-line packet sniffer that can directly capture and interpret data frames from a file or network interface. `tcpdump` supports [Berkley Packet Filter](../bpf.md) syntax.
+`tcpdump` is a command-line packet sniffer that can capture and interpret data frames from a file or network interface. It supports [Berkeley Packet Filter](../bpf.md) syntax.
 
-To capture network traffic from "off the wire," it uses the libraries `pcap` and `libpcap`, paired with an interface in promiscuous mode to listen for data. This allows the program to see and capture packets sourcing from or destined for any device in the local area network, not just the packets destined for us.
+To capture network traffic from the wire, it uses `pcap` and `libpcap` with an interface in promiscuous mode. This lets the program see packets sourced from or destined for any device on the local network, not just traffic addressed to the host.
 
-> In networking, "promiscuous mode" is a configuration that allows a network device (like a Network Interface Card (NIC)) to intercept and read every data packet passing through its network segment, rather than just the packets specifically addressed to it
+> In networking, promiscuous mode allows a network device, such as a network interface card (NIC), to intercept and read every data packet passing through its network segment rather than just packets specifically addressed to it.
 
-| Switch Command | Result |
+| Switch | Result |
 | --- | --- |
-| D |	Will display any interfaces available to capture from. |
-| i |	Selects an interface to capture from. ex. -i eth0 |
-| n |	Do not convert addresses (i.e., host addresses, port numbers, etc.) to names. |
-| e |	Will grab the ethernet header along with upper-layer data. |
-| X |	Show Contents of packets in hex and ASCII. |
-| XX | Same as X, but will also specify ethernet headers. (like using Xe) |
-| v , vv, vvv | Increase the verbosity of output shown and saved. |
-| c |	Grab a specific number of packets, then quit the program. |
-| s |	Defines how much of a packet to grab. |
-| S |	change relative sequence numbers in the capture display to absolute sequence numbers. (13248765839 instead of 101) |
-| q |	Print less protocol information. |
-| r | file.pcap	Read from a file. |
-| w | file.pcap	Write into a file |
+| `-D` | Displays interfaces available for capture. |
+| `-i` | Selects an interface, for example `-i eth0`. |
+| `-n` | Leaves addresses as numeric values. |
+| `-e` | Captures the Ethernet header as well as upper-layer data. |
+| `-X` | Shows packet contents in hex and ASCII. |
+| `-XX` | Shows packet contents and Ethernet headers. |
+| `-v`, `-vv`, `-vvv` | Increases output verbosity. |
+| `-c` | Captures a specific number of packets and then exits. |
+| `-s` | Sets how much of each packet to capture. |
+| `-S` | Converts relative sequence numbers to absolute sequence numbers. |
+| `-q` | Prints less protocol information. |
+| `-r file.pcap` | Reads from a capture file. |
+| `-w file.pcap` | Writes to a capture file. |
 
-The -v, -X, and -e switches can help you increase the amount of data captured, while the -c, -n, -s, -S, and -q switches can help reduce and modify the amount of data written and seen.
+The `-v`, `-X`, and `-e` switches increase the amount of data captured, while `-c`, `-n`, `-s`, `-S`, and `-q` reduce or reshape the output.
 
 ## Example
 
 ![tcpdump example capture](./data/tcpdump.webp)
 
-
-| Filter | Result |
+| Field | Meaning |
 | --- | --- |
-| Timestamp | `Yellow` The timestamp field comes first and is configurable to show the time and date in a format we can ingest easily. |
-| Protocol | `Orange` This section will tell us what the upper-layer header is. In our example, it shows IP. |
-| Source & Destination IP.Port | `Orange` This will show us the source and destination of the packet along with the port number used to connect. Format == IP.port == 172.16.146.2.21 |
-| Flags | `Green` This portion shows any flags utilized. |
-| Sequence and Acknowledgement Numbers | `Red` This section shows the sequence and acknowledgment numbers used to track the TCP segment. Our example is utilizing low numbers to assume that relative sequence and ack numbers are being displayed. |
-| Protocol Options | `Blue` Here, we will see any negotiated TCP values established between the client and server, such as window size, selective acknowledgments, window scale factors, and more. |
-| Notes / Next Header | `White` Misc notes the dissector found will be present here. As the traffic we are looking at is encapsulated, we may see more header information for different protocols. In our example, we can see the TCPDump dissector recognizes FTP traffic within the encapsulation to display it for us. |
+| Timestamp | `Yellow` Timestamp field, usually shown in a readable date and time format. |
+| Protocol | `Orange` Upper-layer protocol, such as IP. |
+| Source & Destination IP.Port | `Orange` Source and destination address plus port, for example `172.16.146.2.21`. |
+| Flags | `Green` TCP flags in use. |
+| Sequence and Acknowledgement Numbers | `Red` Sequence and acknowledgment numbers for the TCP segment. |
+| Protocol Options | `Blue` Negotiated TCP values such as window size, selective acknowledgements, and window scaling. |
+| Notes / Next Header | `White` Additional dissector notes or encapsulated protocol details. |

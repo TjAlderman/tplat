@@ -1,13 +1,13 @@
 # Transport Layer
 
-The transport layer is an abstraction layer that provides end-to-end communication services for applications. It can provide services such as connection-oriented communication, reliability, flow control, and multiplexing. The transport layer provides:
+The transport layer provides end-to-end communication services for applications. It handles connection-oriented communication, reliability, flow control, congestion control, and multiplexing.
 
-* Connection-oriented communication
-* Same order delivery
-* Reliability
-* Flow control
-* Congestion avoidance
-* Multiplexing
+* Connection-oriented communication.
+* In-order delivery.
+* Reliability.
+* Flow control.
+* Congestion control.
+* Multiplexing.
 
 ## TCP vs. UDP
 
@@ -15,15 +15,15 @@ The Transmission Control Protocol (TCP) ([RFC 793](https://tools.ietf.org/html/r
 
 | Characteristic | TCP | UDP |
 | --- | --- | --- |
-| Transmission | Connection-oriented | Connectionless. Fire and forget. |
-| Connection Establishment | TCP uses a three-way handshake to ensure that a connection is established. | UDP does not ensure the destination is listening. |
-| Data Delivery | Stream-based conversations | Packet by packet, the source does not care if the destination is active |
-| Receipt of data | Sequence and Acknowledgement numbers are utilized to account for data. | UDP does not care. |
-| Speed | TCP has more overhead and is slower because of its built-in functions. | UDP is fast but unreliable. |
+| Transmission | Connection-oriented | Connectionless. |
+| Connection establishment | Uses a three-way handshake. | Does not verify that the destination is listening. |
+| Data delivery | Stream-based. | Packet-based. |
+| Receipt of data | Uses sequence and acknowledgment numbers. | Does not track receipt. |
+| Speed | More overhead, but reliable. | Faster, but unreliable. |
 
 ## TCP
 
-TCP utilises an option in the TCP header called flags. There are many different TCP flags; three important flags are SYN, ACK, and FIN.
+TCP uses flags in the header. The three flags worth remembering first are SYN, ACK, and FIN.
 
 ```mermaid
 ---
@@ -49,11 +49,11 @@ packet
 192-255: "Data (variable length)"
 ```
 
-TCP is established through a threeway handshake. First, the client sends a synchronisation packet that establishes a sequence number to start communication from. Window size, maximum segment size, and selective acknowledgements are also established in this packet.
+TCP is established through a three-way handshake. First, the client sends a synchronisation packet that establishes a starting sequence number. Window size, maximum segment size, and selective acknowledgements are also negotiated here.
 
-The server will respond with a packet that includes a SYN flag for sequence number negotiation and an ACK flag to acknowledge the received SYN packet. The server will also include any changes to the TCP options it requires set in the options fields of the TCP header.
+The server responds with a packet that includes a SYN flag for sequence number negotiation and an ACK flag to acknowledge the received SYN packet. It can also include any TCP option changes it requires in the header options field.
 
-The client will respond with a TCP packet with an ACK flag agreeing to the negotiation.
+The client then sends a TCP packet with an ACK flag to confirm the negotiation.
 
 ```mermaid
 sequenceDiagram
@@ -70,3 +70,5 @@ sequenceDiagram
 ```
 
 ## UDP
+
+UDP is connectionless and message-oriented. It does not guarantee delivery, ordering, or retransmission, which keeps the protocol lightweight.

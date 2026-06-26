@@ -1,19 +1,14 @@
 # Data Link Layer
 
-This layer is the protocol layer that transfers data (i.e. frames) between **nodes** on a local network segment across the physical layer. The data link layer may also provide the means to detect and possibly correct errors that can occur in the physical layer. The data link layer provides:
+The data link layer transfers frames between nodes on the same local network segment. It can also detect and sometimes correct errors from the physical layer.
 
-* Encapsulation of network layer into frames
-* Frame synchronisation
-* Error control
-* Flow control
-* Multiple access methods
-* Physical addressing
-* LAN switching
-* Data packet queuing or scheduling
-* Store-and-forward switching or cut-through switching
-* Quality of service control
-* VLANs
+The data link layer handles:
+
+* Frame encapsulation.
+* Physical addressing.
+* Flow and error control.
+* Access methods, switching, and VLAN support.
 
 ## MAC Addresses
 
-MAC addresses live at the data link layer. This address is a 48-bit 6 octet address represented in hexadecimal format
+MAC addresses live at the data link layer. They are 48-bit, six-octet identifiers represented in hexadecimal format.

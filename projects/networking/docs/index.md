@@ -1,3 +1,3 @@
 # Networking
 
-An index of my personal projects related to networking.
+Reference notes for networking topics, tools, and protocol layers.
