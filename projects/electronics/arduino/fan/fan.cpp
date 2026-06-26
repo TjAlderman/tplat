@@ -3,7 +3,7 @@
   is wired to base of transistor to enable control of fan speed.
 */
 #include "Arduino.h"
-#include "Fan.h"
+#include "fan.h"
 
 FAN::FAN(int mPin) {
   _pin = mPin;

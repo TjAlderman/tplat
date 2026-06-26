@@ -2,7 +2,7 @@
   LM335.h - Library for control of LM335 temperature sensor.
 */
 #include "Arduino.h"
-#include "LM335.h"
+#include "lm335.h"
 
 LM335::LM335(float mCal, int mPin)
 {
@@ -18,7 +18,7 @@ float LM335::measureV()
 }
 float LM335::measureK()
 {
-  return measureV()/0.01;//10mV/k
+  return measureV()/0.01; //10mV/k
 }
 float LM335::measureC()
 {

@@ -8,15 +8,13 @@
 
 class LM335 {
   public:
-    LM335(float mCal, int mPin); // to initialise an instance of the class, we must specify mCal and mPin
-    // the class has the following methods
+    LM335(float mCal, int mPin);
     float measureV(); 
     float measureK();
     float measureC();
     float measureF();
     float measureRankine();
   private:
-    // the class has the following internal variables
     float _cal;
     int _pin;
 };
