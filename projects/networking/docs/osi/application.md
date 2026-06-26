@@ -27,7 +27,7 @@ For more information on how HTTPS functions and how TLS performs security operat
 
 ## FTP
 
-File Transfer Protocol (FTP) is an Application Layer protocol that enables quick data transfer between computing devices. 
+File Transfer Protocol (FTP) is an Application Layer protocol that enables quick data transfer between computing devices.
 
 FTP is unique since it utilizes multiple ports at a time. FTP uses ports 20 and 21 over TCP. Port 20 is used for data transfer, while port 21 is utilized for issuing commands controlling the FTP session.
 

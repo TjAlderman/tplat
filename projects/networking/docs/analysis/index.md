@@ -18,3 +18,35 @@ If an attacker seeks to breach a network, they must inevitably communicate with 
 | Networking Span Ports | Span Ports are a way to copy frames from layer two or three networking devices during egress or ingress processing and send them to a collection point. Often a port is mirrored to send those copies to a log server. |
 | Elastic Stack | The Elastic Stack is a culmination of tools that can take data from many sources, ingest the data, and visualize it, to enable searching and analysis of it. |
 | SIEMS | SIEMS (such as Splunk) are a central point in which data is analyzed and visualized. Alerting, forensic analysis, and day-to-day checks against the traffic are all use cases for a SIEM. |
+
+The best placement for a tap is in a layer three link between switched segments. It allows for the capture of any traffic routing outside of the local network. A switched port or VLAN segmentation does not filter our view here.
+
+## Process
+
+This is not an exact science. It can be a very dynamic process and is not a direct loop. It is greatly influenced by what we are looking for (network errors vs. malicious actions) and where you have visibility into your network. Analysis can be distilled down to a few basic tenets, however.
+
+### Descriptive Analysis
+
+Establish a baseline. Define the scope
+
+1. What is the issue?
+2. What are we looking for, and when?
+3. Define our target(s) (net / host(s) / protocol)
+
+### Diagnostic Analysis
+
+Clarifies the causes, effects, and interactions of conditions
+
+4. Capture network traffic
+5. Identification relevant traffic (filtering)
+6. Understand captured traffic
+
+### Predictive Analysis
+
+Makes it possible to identify trends, detect deviations from expected values at an early stage, and predict future occurrences as accurately as possible.
+
+7. Note-taking, summarise existing analysis
+
+### Prescriptive Analysis
+
+narrow down what actions to take to eliminate or prevent a future problem or trigger a specific activity or process. To prescribe a solution is the culmination of this workflow.

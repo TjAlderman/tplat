@@ -11,7 +11,7 @@ The transport layer is an abstraction layer that provides end-to-end communicati
 
 ## TCP vs. UDP
 
-TCP and UDP reside at the transport layer.
+The Transmission Control Protocol (TCP) ([RFC 793](https://tools.ietf.org/html/rfc793)) and User Datagram Protocol (UDP) ([RFC 768](https://tools.ietf.org/html/rfc768)) reside at the transport layer.
 
 | Characteristic | TCP | UDP |
 | --- | --- | --- |
@@ -68,7 +68,5 @@ sequenceDiagram
     Server-->>Client: FIN + ACK
     Client-)Server: ACK
 ```
-
-
 
 ## UDP
