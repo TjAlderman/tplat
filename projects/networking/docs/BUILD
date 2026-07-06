@@ -5,6 +5,7 @@ doc_section(
     srcs = [
         "bpf.md",
         "pdu.md",
+        "security.md",
         "//projects/networking/docs/osi",
         "//projects/networking/docs/tcpip",
         "//projects/networking/gopher/docs",

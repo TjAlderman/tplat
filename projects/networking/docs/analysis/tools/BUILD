@@ -3,6 +3,7 @@ load("//rules:doc.bzl", "doc_section")
 doc_section(
     name = "tools",
     srcs = [
+        "nmap.md",
         "tcpdump.md",
         "termshark.md",
         "tshark.md",

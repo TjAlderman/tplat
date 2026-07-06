@@ -1,6 +1,6 @@
 # Data Link Layer
 
-The data link layer transfers frames between nodes on the same local network segment. It can also detect and sometimes correct errors from the physical layer.
+The data link layer transfers frames between devices on the same local network segment. It also defines how devices identify one another on the local link and how frames move across the physical medium.
 
 The data link layer handles:
 The data link layer transfers frames between nodes on the same local network segment. It can also detect and sometimes correct errors from the physical layer.
@@ -14,13 +14,13 @@ The data link layer handles:
 
 ## MAC Addresses
 
-Medium/media Access Control (MAC) addresses live at the data link layer. They are 48-bit, six-octet identifiers represented in hexadecimal format.
+Media Access Control (MAC) addresses live at the data link layer. They are 48-bit, six-octet identifiers represented in hexadecimal format.
 
 ## ARP
 
-Address resolution protocol (ARP) is a communication protocol for discovering MAC addresses.
+Address Resolution Protocol (ARP) maps an IP address to a MAC address on the local network.
 
-ARP enables a host to send, for example, an IPv4 packet to another node in the local network by providing a protocol to get the MAC address associated with an IP address. The host **broadcasts** a request containing the target node's IP address (i.e., all hosts on the network receive this broadcast), and the node with that IP address replies with its MAC address.
+When a host needs to send an IPv4 packet to another node on the same segment, it broadcasts an ARP request containing the target IP address. The host with that address replies with its MAC address.
 
 ```
 SENT (0.0074s) ARP who-has 10.129.2.18 tell 10.10.14.2
@@ -29,8 +29,6 @@ RCVD (0.0309s) ARP reply 10.129.2.18 is-at DE:AD:00:00:BE:EF
 
 ### Security
 
-Because the request is broadcast, an attack vector is introduced where other devices may falsely respond with their MAC address. This attack is known as **ARP spoofing**. This can be particularly damaging if the attack is used to spoof the default gateway. This can be used as an opening for other attacks, such as denial of service, man in the middle, or session hijacking.
+Because ARP requests are broadcast, a malicious device can reply with a false MAC address and redirect traffic. This attack is known as **ARP spoofing**. It is often used to impersonate the default gateway, which can lead to denial of service, man-in-the-middle interception, or session hijacking.
 
-Software that detects ARP spoofing generally relies on some form of certification or cross-checking of ARP responses. Uncertified ARP responses are then blocked. These techniques may be integrated with the DHCP server so that both dynamic and static IP addresses are certified. This capability may be implemented in individual hosts or may be integrated into Ethernet switches or other network equipment. The existence of multiple IP addresses associated with a single MAC address may indicate an ARP spoof attack, although there are legitimate uses of such a configuration. In a more passive approach, a device listens for ARP replies on a network and sends a notification via email when an ARP entry changes.
-
-Mitigated by smart switch that does dynamic ARP inspection.
+Defenses usually compare ARP replies against trusted mappings or watch for conflicting IP-to-MAC associations. On managed switches, dynamic ARP inspection can help block forged replies.
