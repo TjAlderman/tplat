@@ -9,5 +9,6 @@ doc_section(
         "wireshark.md",
     ],
     index = "index.md",
+    data = ["//projects/networking/docs/analysis/tools/data"],
     visibility = ["//visibility:public"],
 )

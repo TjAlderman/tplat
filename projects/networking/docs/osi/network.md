@@ -20,9 +20,21 @@ After a little over a decade of using IPv4, the pool of usable addresses was eff
 
 IPv6 provides a much larger address space for networked systems. An IPv6 address is 128 bits, or 16 octets, represented in hexadecimal format.
 
+### TTL
+
+Time to live (TTL) is a mechanism which limits the lifespan or lifetime of data in a computer or network. TTL prevents a data packet from circulating indefinitely.
+
+When a device originates an IP packet, it assigns an initial TTL value. The common default TTL values are:
+
+64 – Linux/MAC OSX systems
+128 – Windows systems
+255 – Network devices like routers
+
 ## ICMP
 
 The Internet Control Message Protocol (ICMP), introduced in [RFC 792](https://tools.ietf.org/html/rfc792), is used by network devices to send error messages and operational information indicating success or failure when communicating with another IP address.
+
+For example, every device (such as an intermediate router) forwarding an IP datagram first decrements the time to live (TTL) field in the IP header by one. If the resulting TTL is 0, the packet is discarded and an ICMP time exceeded message is sent to the datagram's source address.
 
 ## DNS
 
