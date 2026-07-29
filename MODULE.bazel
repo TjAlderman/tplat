@@ -1,0 +1,56 @@
+# Specify information about the current module, including its name, metadata, and so on...
+module(
+    name = "tplat",
+    version = "1.0.0",  # Bazel does not enforce any specific version format...
+)
+
+# Specify direct dependencies on other Bazel modules
+bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_rust", version = "0.69.0")
+bazel_dep(name = "rules_apple", version = "4.5.3", repo_name = "build_bazel_rules_apple")
+bazel_dep(name = "apple_support", version = "2.5.3", repo_name = "build_bazel_apple_support")
+bazel_dep(name = "rules_swift", version = "3.6.1", repo_name = "build_bazel_rules_swift")
+bazel_dep(name = "rules_cc", version = "0.2.17")
+bazel_dep(name = "rules_oci", version = "2.2.7")
+bazel_dep(name = "aspect_bazel_lib", version = "2.19.3")
+bazel_dep(name = "rules_python", version = "1.9.0")
+bazel_dep(name = "aspect_rules_py", version = "1.8.4")
+bazel_dep(name = "rules_uv", version = "0.89.2")
+bazel_dep(name = "rules_multirun", version = "0.13.0")
+bazel_dep(name = "rules_ruby", version = "0.21.1")
+bazel_dep(name = "bazel_skylib", version = "1.9.0")
+bazel_dep(name = "rules_shell", version = "0.6.1")
+
+# Directives related to module extensions
+include("//toolchains/rust:rust.MODULE.bazel")
+include("//toolchains/python:python.MODULE.bazel")
+include("//toolchains/ruby:ruby.MODULE.bazel")
+include("//toolchains/hugo:hugo.MODULE.bazel")
+include("//toolchains/js:js.MODULE.bazel")
+include("//toolchains/nodejs:nodejs.MODULE.bazel")
+
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "distroless_base",
+    image = "gcr.io/distroless/base",
+    platforms = ["linux/amd64"],
+    tag = "latest",
+)
+oci.pull(
+    name = "distroless_python_312",
+    image = "gcr.io/distroless/python3-debian12",
+    platforms = ["linux/amd64"],
+    tag = "3.12",
+)
+use_repo(oci, "distroless_base", "distroless_base_linux_amd64", "distroless_python_312", "distroless_python_312_linux_amd64")
+
+# Register toolchains
+register_toolchains(
+    # "//toolchains/cpp:darwin_x86_64_toolchain",
+    "//toolchains/cpp:linux_x86_64_toolchain",
+    "//toolchains/cpp:windows_x86_64_toolchain",
+    "@rust_toolchains//:all",
+    "@python_versions//:all",
+    "@ruby_toolchains//:all",
+    "@build_stack_rules_hugo//hugo:all",
+)

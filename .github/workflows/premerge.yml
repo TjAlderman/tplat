@@ -1,0 +1,27 @@
+name: Pre-Merge Checks
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  toolchains:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Bazel
+        uses: bazelbuild/setup-bazelisk@v3
+
+      - name: Run toolchain tests
+        run: |
+          set -euxo pipefail
+
+          bazel test //projects/hello_world/...
+          bazel test //toolchains/...
+          bazel build //projects/docs:docs_site.build
